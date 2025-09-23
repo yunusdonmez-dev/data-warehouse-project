@@ -1,12 +1,29 @@
 /*
+======================================================================
+Data Quality Validation
+======================================================================
+Purpose:
+  This script validates the integrity, consistency, and formatting of 
+  data stored in the 'silver' schema. Checks include:
+    - Missing or duplicate primary keys
+    - Extra or trailing spaces in text columns
+    - Standardization of values and formats
+    - Invalid or illogical date sequences
+    - Cross-field consistency rules
 
+Usage:
+  - Execute after loading data into the silver layer
+  - Review and correct any issues highlighted by these checks
 
+Notes:
+  - This script does not cover all possible data cleansing checks. 
+    Additional validations may be required depending on business rules.
+  - Other quality controls are also in place outside of this script.
 
-
-
-
-
-
+Process:
+  - Clear silver tables
+  - Populate them with transformed and cleaned records sourced from 'bronze'
+======================================================================
 */
 
 
@@ -41,7 +58,7 @@ FROM bronze.crm_sales_details
 WHERE sls_cust_id NOT IN (
 	SELECT DISTINCT cst_id 
 	FROM bronze.crm_cust_info
-)-- FOREIGN KEY CHECK : Does it join cleanly with dimension tables ? 
+)-- FOREIGN KEY CHECK : Does it join cleanly with dimension tables? 
 
 
 SELECT prd_name
